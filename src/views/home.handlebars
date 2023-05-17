@@ -1,11 +1,14 @@
-<h1>hola athenea</h1>
-{{#each products}}
-<h2>Producto: {{this.title}}</h2>
-<li>{{this.description}}</li>
-<li>{{this.price}}</li>
-<li>{{this.stock}}</li>
-<br>
+<div id="allProducts">
+{{#each productos}}
+<p id="_titulo">TITLE: {{this.title}}</p><br>
+<p id="_id">ID: {{this.id}}</p><br>
 {{/each}}
+<div>
+
+
+<button onclick="pushear()">ACTIVO LA FUNCION PUSHEAR</button>
+
+
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

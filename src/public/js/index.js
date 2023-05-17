@@ -1,23 +1,25 @@
 const socket = io();
 
+let allProducts = document.getElementById("allProducts")
+console.log(allProducts.innerHTML)
 
-//mensaje capturado por el front 1
-socket.on('msg_to_front_one', (data) =>{
-    console.log(JSON.stringify(data))
 
+/*
+let pone = document.getElementById("_titulo")
+let ptwo = document.getElementById("_id")
+let test = document.getElementById('loli')
+let allProducts = []
+
+
+socket.emit('getProducts', {})
+socket.on('allProducts', (productos) => {
+    allProducts.push(productos)
+  console.log(allProducts)
 })
 
-//mensaje  enviado al back
-socket.emit('msg_to_back', {msg: ' linea 11, mensaje desde el front', status: 1});
-
-//mensaje capturado por el front
-socket.on('msg_to_front', (data) =>{
-    console.log(JSON.stringify(data))
-
-})
-
-//mensaje capturado x el front 2
-socket.on('msg_to_front_two', (data)=>{
-    console.log(JSON.stringify(data))
-})
+function pushear() {
+    test.innerText = JSON.stringify(allProducts)
+    console.log(pone)
+}
+*/
 

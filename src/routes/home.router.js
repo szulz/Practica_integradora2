@@ -5,9 +5,13 @@ const ProductManager = require('../controllers/productManager.js')
 const productManager = new ProductManager();
 
 homeRouter.get("/", async (req, res) => {
-    let products = await productManager.getProducts()
-    return res.render("home", {products})
+    let productos = await productManager.getProducts();
+    return res.render("home", {productos})
 })
 
+homeRouter.post('/', async (req, res) => {
+    let myBody = req.body
+    res.send(myBody)
+})
 
 module.exports = homeRouter
