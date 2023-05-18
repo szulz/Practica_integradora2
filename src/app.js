@@ -59,6 +59,10 @@ socketServer.on('connection', async (socket) => {
     }
   })
 
+  socket.on('deleteProd', async data=>{
+    await productManager.deleteProduct(data)
+    socketServer.emit('successfullDelete', {})
+  })
 })
 
 

@@ -20,20 +20,16 @@
     <button type="submit">AGREGAR PRODUCTO</button>
 </form>
 
-<form id="delete_by_id">
-    <label for="id_to_delete">Type the id of the product you want to delete</label>
-    <input type="number" name="id_to_delete" id="id_to_delete"><br>
-    <button type="submit">DELETE</button>
-</form>
-
 <ul class="product_list" id="product_list">
     {{#each productos}}
-    <li>TITULO: {{this.title}}<br>
+    <li id="{{this.id}}">
+        TITULO: {{this.title}}<br>
         DESCRIPCION: {{this.description}}<br>
         CODE: {{this.code}}<br>
         STOCK: {{this.stock}}<br>
         CATEGORIA: {{this.category}} <br>
-        ID: {{this.id}}</li><br>
+        <button onclick="deleteProduct({{this.id}})">DELETE</button>
+    </li> <br>
     {{/each}}
 </ul>
 

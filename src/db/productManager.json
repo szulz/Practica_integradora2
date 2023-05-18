@@ -1,35 +1,46 @@
 [
   {
-    "title": "newtitle",
-    "description": "Esto es el segundo producto",
-    "price": 5000,
-    "code": 99,
-    "stock": 99,
-    "status": true,
-    "category": "sports",
+    "title": "any",
+    "description": "any",
+    "price": "0000",
+    "code": "22222",
+    "stock": "0000",
+    "category": "any",
     "thumbnail": "no image",
-    "id": 7982
+    "status": true,
+    "id": 8550
   },
   {
-    "title": "Producto 2",
-    "description": "Esto es el segundo producto",
-    "price": 5000,
-    "code": "asdas",
-    "stock": 99,
-    "status": true,
-    "category": "sports",
+    "title": "any",
+    "description": "any",
+    "price": "0000",
+    "code": "0000222",
+    "stock": "0000",
+    "category": "any",
     "thumbnail": "no image",
-    "id": 444
+    "status": true,
+    "id": 4421
   },
   {
-    "title": "Producto 2",
-    "description": "Esto es el segundo producto",
-    "price": 5000,
-    "code": "dsad",
-    "stock": 99,
+    "title": "any",
+    "description": "any",
+    "price": "0000",
+    "code": "0000222222",
+    "stock": "0000",
+    "category": "any",
+    "thumbnail": "no image",
     "status": true,
-    "category": "sports",
-    "thumbnail": ".jpg",
-    "id": 1680
+    "id": 4249
+  },
+  {
+    "title": "any",
+    "description": "any",
+    "price": "0000",
+    "code": "0222",
+    "stock": "0000",
+    "category": "any",
+    "thumbnail": "no image",
+    "status": true,
+    "id": 5853
   }
 ]

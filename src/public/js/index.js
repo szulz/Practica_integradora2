@@ -4,7 +4,6 @@ let productForm = document.getElementById("product_form")
 let productList = document.getElementById('product_list')
 let idToDeleteForm = document.getElementById("delete_by_id")
 
-
 productForm.addEventListener("submit", async (e) => {
   e.preventDefault()
   const title = document.getElementById("title").value
@@ -26,28 +25,26 @@ productForm.addEventListener("submit", async (e) => {
   console.log(product);
 })
 
-idToDeleteForm.addEventListener("submit", async (e) => {
-  e.preventDefault()
-  const id = document.getElementById("id_to_delete").value
-  socket.emit("idToDelete", (JSON.parse(id)))
+async function deleteProduct(id) {
+  socket.emit('deleteProd', id)
+  socket.on('successfullDelete', async () => {
+    let del = document.getElementById(id)
+    del.remove()
+  })
+}
 
+socket.on('productListed', async (product) => {
+  const newProduct = `
+  <li id="${product.id}">
+  TITULO: ${product.title}<br>
+  DESCRIPCION: ${product.description}<br>
+  CODE: ${product.code}<br>
+  STOCK: ${product.stock}<br>
+  CATEGORIA: ${product.category} <br>
+  <button onclick="deleteProduct('${product.id}')">DELETE</button>
+</li> <br>
+`
+  productList.innerHTML += newProduct;
 })
 
-socket.on('productDeleted', (data)=>{
-  
-})
 
-socket.on('productListed', (product) => {
-  const title = `<li>${product.title}</li>`
-  const description = `<li>${product.description}</li>`
-  const code = `<li>${product.code}</li>`
-  const stock = `<li>${product.stock}</li>`
-  const category = `<li>${product.category}</li>`
-  const id = `<li>${product.id}</li>`
-  productList.innerHTML += title
-  productList.innerHTML += description
-  productList.innerHTML += code
-  productList.innerHTML += stock
-  productList.innerHTML += category
-  productList.innerHTML += id
-})
