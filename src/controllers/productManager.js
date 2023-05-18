@@ -35,6 +35,7 @@ class ProductManager {
         };
         products.push(product);
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2), "utf-8");
+        return product;
     }
     async getProducts() {
         if (fs.existsSync(this.path)) {
@@ -88,6 +89,7 @@ class ProductManager {
                 await fs.promises.writeFile(this.path, JSON.stringify(todosLosProductos, null, 2), "utf-8");
                 return;
             }
+            throw new Error('id not found')
         } catch (error) {
             return error;
         }

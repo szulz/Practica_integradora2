@@ -1,14 +1,41 @@
-<div id="allProducts">
-{{#each productos}}
-<p id="_titulo">TITLE: {{this.title}}</p><br>
-<p id="_id">ID: {{this.id}}</p><br>
-{{/each}}
-<div>
+<form id="product_form">
+    <p style="margin: 0%;">Description</p>
+    <input type="text" name="title" id="title" value="any"><br>
 
+    <p style="margin: 0%;">Description</p>
+    <input type="text" name="description" id="description" value="any"><br>
 
-<button onclick="pushear()">ACTIVO LA FUNCION PUSHEAR</button>
+    <p style="margin: 0%;">price</p>
+    <input type="number" name="price" id="price" value="0000"><br>
 
+    <p style="margin: 0%;">Product Code</p>
+    <input type="number" name="code" id="code" value="0000"><br>
 
+    <p style="margin: 0%;">Stock available</p>
+    <input type="number" name="stock" id="stock" value="0000"><br>
+
+    <p style="margin: 0%;">Category</p>
+    <input type="text" name="category" id="category" value="any"><br>
+
+    <button type="submit">AGREGAR PRODUCTO</button>
+</form>
+
+<form id="delete_by_id">
+    <label for="id_to_delete">Type the id of the product you want to delete</label>
+    <input type="number" name="id_to_delete" id="id_to_delete"><br>
+    <button type="submit">DELETE</button>
+</form>
+
+<ul class="product_list" id="product_list">
+    {{#each productos}}
+    <li>TITULO: {{this.title}}<br>
+        DESCRIPCION: {{this.description}}<br>
+        CODE: {{this.code}}<br>
+        STOCK: {{this.stock}}<br>
+        CATEGORIA: {{this.category}} <br>
+        ID: {{this.id}}</li><br>
+    {{/each}}
+</ul>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

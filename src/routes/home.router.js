@@ -10,6 +10,7 @@ homeRouter.get("/", async (req, res) => {
 })
 
 homeRouter.post('/', async (req, res) => {
+    console.log('acá estoy')
     let myBody = req.body
     res.send(myBody)
 })
