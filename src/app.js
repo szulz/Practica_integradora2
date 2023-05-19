@@ -41,29 +41,20 @@ const httpServer = app.listen(port, () => {
 const socketServer = new Server(httpServer)
 
 socketServer.on('connection', async (socket) => {
-  //console.log('se abrio un socket en ' + socket.id)
+  console.log('se abrio un socket en ' + socket.id);
 
   socket.on('product', async (product) => {
-    let newProduct = await productManager.addProduct(product)
-    socketServer.emit('productListed', newProduct)
-  })
+    let newProduct = await productManager.addProduct(product);
+    socketServer.emit('productListed', newProduct);
 
+  });
 
-  socket.on("idToDelete", async (id) => {
-    try {
-      await productManager.deleteProduct(id)
-      console.log(`el producto con el id ${id} has been deleted successfully `)
-
-    } catch (error) {
-      error.message
-    }
-  })
-
-  socket.on('deleteProd', async data=>{
-    await productManager.deleteProduct(data)
-    socketServer.emit('successfullDelete', {})
-  })
-})
+  socket.on('deleteProd', async data => {
+    await productManager.deleteProduct(data);
+    socketServer.emit('successfullDelete', JSON.parse(data));
+    console.log('2');
+  });
+});
 
 
 
