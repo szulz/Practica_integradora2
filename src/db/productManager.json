@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "title": "Producto 1 ",
+    "description": "Cualquier cosa",
+    "price": "5000",
+    "code": "51615",
+    "stock": "200",
+    "category": "any",
+    "thumbnail": "no image",
+    "status": true,
+    "id": 7166
+  },
+  {
+    "title": "ejemplo 1",
+    "description": "ejemplo 2",
+    "price": "555",
+    "code": "555",
+    "stock": "555",
+    "category": "any",
+    "thumbnail": "no image",
+    "status": true,
+    "id": 1030
+  }
+]

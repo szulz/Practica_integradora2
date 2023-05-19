@@ -2,7 +2,6 @@ const socket = io();
 
 let productForm = document.getElementById("product_form");
 let productList = document.getElementById('product_list');
-let idToDeleteForm = document.getElementById("delete_by_id");
 
 productForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -39,14 +38,15 @@ socket.on('productListed', async (product) => {
   productList.innerHTML += newProduct;
 });
 
+
+//Proceso de Delete
+
 async function deleteProduct(id) {
-  console.log('1');
   socket.emit('deleteProd', JSON.parse(id));
 };
 
 socket.on('successfullDelete', async (data) => {
   let del = document.getElementById(JSON.parse(data));
-  console.log(data);
   del.remove();
 });
 
