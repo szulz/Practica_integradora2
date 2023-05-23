@@ -1,37 +1,13 @@
-<form id="product_form">
-    <p style="margin: 0%;">Description</p>
-    <input type="text" name="title" id="title" value="any"><br>
+{{#each productos}}
+<li id="{{this.id}}">
+    TITULO: {{this.title}}<br>
+    DESCRIPCION: {{this.description}}<br>
+    CODE: {{this.code}}<br>
+    STOCK: {{this.stock}}<br>
+    CATEGORIA: {{this.category}} <br>
+    <button onclick="deleteProduct({{this.id}})">DELETE</button>
+</li> <br>
+{{/each}}
 
-    <p style="margin: 0%;">Description</p>
-    <input type="text" name="description" id="description" value="any"><br>
 
-    <p style="margin: 0%;">price</p>
-    <input type="number" name="price" id="price" value="0000"><br>
-
-    <p style="margin: 0%;">Product Code</p>
-    <input type="number" name="code" id="code" value="0000"><br>
-
-    <p style="margin: 0%;">Stock available</p>
-    <input type="number" name="stock" id="stock" value="0000"><br>
-
-    <p style="margin: 0%;">Category</p>
-    <input type="text" name="category" id="category" value="any"><br>
-
-    <button type="submit">AGREGAR PRODUCTO</button>
-</form>
-
-<ul class="product_list" id="product_list">
-    {{#each productos}}
-    <li id="{{this.id}}">
-        TITULO: {{this.title}}<br>
-        DESCRIPCION: {{this.description}}<br>
-        CODE: {{this.code}}<br>
-        STOCK: {{this.stock}}<br>
-        CATEGORIA: {{this.category}} <br>
-        <button onclick="deleteProduct({{this.id}})">DELETE</button>
-    </li> <br>
-    {{/each}}
-</ul>
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/home.js"></script>

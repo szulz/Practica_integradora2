@@ -1,24 +1,46 @@
 [
   {
-    "title": "Producto 1 ",
-    "description": "Cualquier cosa",
-    "price": "5000",
-    "code": "51615",
-    "stock": "200",
+    "title": "any",
+    "description": "any",
+    "price": "0000",
+    "code": "123",
+    "stock": "0000",
     "category": "any",
     "thumbnail": "no image",
     "status": true,
-    "id": 7166
+    "id": 8156
   },
   {
-    "title": "ejemplo 1",
-    "description": "ejemplo 2",
-    "price": "555",
-    "code": "555",
-    "stock": "555",
+    "title": "any",
+    "description": "any",
+    "price": "0000",
+    "code": "42141",
+    "stock": "0000",
     "category": "any",
     "thumbnail": "no image",
     "status": true,
-    "id": 1030
+    "id": 7479
+  },
+  {
+    "title": "any",
+    "description": "any",
+    "price": "0000",
+    "code": "1424141",
+    "stock": "0000",
+    "category": "any",
+    "thumbnail": "no image",
+    "status": true,
+    "id": 859
+  },
+  {
+    "title": "any",
+    "description": "any",
+    "price": "0000",
+    "code": "532",
+    "stock": "0000",
+    "category": "any",
+    "thumbnail": "no image",
+    "status": true,
+    "id": 9666
   }
 ]
