@@ -3,7 +3,7 @@ const express = require('express');
 const productsRouter = express.Router();
 const ProductManager = require('../controllers/productManager');
 const productManager = new ProductManager();
-const uploader = require('../utils')
+const myModules = require('../utils')
 
 
 // LIMITE O GETALL
@@ -40,28 +40,28 @@ productsRouter.get('/', async (req, res) => {
 
 //GET X ID
 productsRouter.get('/:id', async (req, res) => {
-    try{
-    const id = req.params.id;
-    const product = await productManager.getProductById(JSON.parse(id));
-    if (product) {
-        return res.status(200).json({
-            status: "SUCCESS",
-            msg: `Product found with the matching id ${id}.`,
-            data: product
+    try {
+        const id = req.params.id;
+        const product = await productManager.getProductById(JSON.parse(id));
+        if (product) {
+            return res.status(200).json({
+                status: "SUCCESS",
+                msg: `Product found with the matching id ${id}.`,
+                data: product
+            });
+        }
+        return res.status(404).send({
+            status: "BAD REQUEST",
+            msg: `There's no product matching with requested id.`
         });
+    } catch (error) {
+        res.status(404).send(error.message)
     }
-    return res.status(404).send({
-        status: "BAD REQUEST",
-        msg: `There's no product matching with requested id.`
-    });
-}catch (error){
-    res.status(404).send(error.message)
-}
 });
 
 
 //CREA PROD Y CHECKEAR POR PROPS
-productsRouter.post('/', uploader.single("thumbnail"), async (req, res) => {
+productsRouter.post('/', myModules.multer.single("thumbnail"), async (req, res) => {
     try {
         const newProd = req.body;
         newProd.thumbnail = "http://localhost:8080/" + req.file.filename
@@ -100,24 +100,24 @@ productsRouter.put('/:id', async (req, res) => {
 
 //BORRO POR ID
 productsRouter.delete('/:id', async (req, res) => {
-    try{
-    const id = req.params.id;
-    let deletedProd = await productManager.getProductById(JSON.parse(id))
-    if (deletedProd) {
-        await productManager.deleteProduct(JSON.parse(id));
-        return res.status(200).send({
-            status: 'SUCCESS',
-            msg: 'The following product has been deleted',
-            data: deletedProd
+    try {
+        const id = req.params.id;
+        let deletedProd = await productManager.getProductById(JSON.parse(id))
+        if (deletedProd) {
+            await productManager.deleteProduct(JSON.parse(id));
+            return res.status(200).send({
+                status: 'SUCCESS',
+                msg: 'The following product has been deleted',
+                data: deletedProd
+            });
+        }
+        return res.status(404).send({
+            status: 'BAD REQUEST',
+            msg: `There's no product matching with requested id.`
         });
+    } catch (error) {
+        res.status(404).send(error.message)
     }
-    return res.status(404).send({
-        status: 'BAD REQUEST',
-        msg: `There's no product matching with requested id.`
-    });
-}catch(error){
-    res.status(404).send(error.message)
-}
 });
 
 module.exports = productsRouter;
