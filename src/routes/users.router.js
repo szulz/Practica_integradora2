@@ -1,6 +1,7 @@
+//@ts-check
 const fs = require('fs');
 const express = require('express');
-const UserModel = require('../models/users.model');
+const UserModel = require('../DAO/models/users.model');
 const usersRouter = express.Router()
 
 
