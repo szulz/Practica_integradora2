@@ -52,9 +52,11 @@ class ProductManagerMongoose {
     };
 
     async deleteProduct(id) {
-        let deletedProd = await productModel.deleteOne({ _id: id })
-        console.log(deletedProd);
-        return
+        try {
+            return await productModel.deleteOne({ _id: id });
+        } catch (e) {
+            throw new Error('error en delete product');
+        }
     }
 
 };

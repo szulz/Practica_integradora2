@@ -54,7 +54,7 @@ productsRouter.put('/:id', async (req, res) => {
             data: updatedProduct
         });
     } catch (e) {
-        res.status(400).json({ msg: 'something went wrong' })
+        res.status(400).send({ msg: e.message })
     }
 });
 

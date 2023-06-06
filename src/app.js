@@ -5,7 +5,8 @@ const { json } = require('express');
 const handlebars = require('express-handlebars')
 
 const productsRouter = require('./routes/product.router.js');
-/*const cartsRouter = require('./routes/carts.router.js');
+const cartsRouter = require('./routes/carts.router.js');
+/*
 const homeRouter = require('./routes/home.router.js')
 const usersRouter = require('./routes/users.router.js')*/
 
@@ -31,7 +32,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // --------RUTAS--------
 
 app.use('/api/products', productsRouter);
-/*app.use('/api/carts', cartsRouter);
+app.use('/api/carts', cartsRouter);
+/*
 app.use('/home', homeRouter);
 app.use('/users', usersRouter);*/
 
