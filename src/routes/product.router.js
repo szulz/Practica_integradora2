@@ -11,7 +11,7 @@ productsRouter.get('/', async (req, res) => {
         res.status(200).json({ data: allProducts })
     } catch (e) {
         res.status(400).json({
-            msg: 'error'
+            msg: e.message
         })
     }
 });
@@ -20,9 +20,9 @@ productsRouter.get('/', async (req, res) => {
 productsRouter.get('/:id', async (req, res) => {
     try {
         let product = await productManagerMongoose.getById(req.params.id);
-        return res.status(200).json({
+        res.status(200).json({
             status: "SUCCESS",
-            msg: `Product found with the matching id ${id}.`,
+            msg: `Product found with the matching id ${req.params.id}.`,
             data: product
         });
     } catch (e) {
@@ -33,7 +33,7 @@ productsRouter.get('/:id', async (req, res) => {
 //CREA PROD Y CHECKEAR POR PROPS
 productsRouter.post('/', async (req, res) => {
     try {
-        await productManagerMongoose.createProduct(req.body);
+        let newProd = await productManagerMongoose.createProduct(req.body);
         return res.send({
             status: 'Product successfully added!',
             msg: `The following product has been added to the list:`,

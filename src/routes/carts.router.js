@@ -4,7 +4,9 @@ const cartsModel = require("../DAO/models/carts.model.js");
 const CartManagerMongoose = require("../services/carts.service.js");
 const cartManagerMongoose = new CartManagerMongoose
 
+//CREO NUEVO CARRO
 cartsRouter.post('/', async (req, res) => {
+    console.log('entre al create');
     try {
         let cart = await cartManagerMongoose.createCart();
         res.status(200).send({
@@ -28,13 +30,13 @@ cartsRouter.get('/:cid', async (req, res) => {
 
 
 //PASO ID DEL CARRO Y PRODUCTO CON SU ID
-cartsRouter.post('/:cid/:pid', async (req, res) => {
+cartsRouter.post('/:cid/products/:pid', async (req, res) => {
     let cartData = await cartManagerMongoose.addToCart(req.params.cid, req.params.pid);
     res.send({
         msg: 'The following cart has been found',
         data: cartData
     });
-})
+});
 
 //x si no ingreso ruta
 cartsRouter.get('/', async (req, res) => {

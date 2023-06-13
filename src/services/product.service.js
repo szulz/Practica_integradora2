@@ -5,8 +5,15 @@ class ProductManagerMongoose {
     async getAll(limit) {
         try {
             const productos = await productModel.find();
-            return productos;
-            //FALTA AGREGAR TODA LA LOGICA DE LIMIT
+            if (!limit) {
+                return productos;
+            }
+            if (limit > productos.length) {
+                throw new Error(`theres only ${productos}`)
+            }
+            let productosLimitados = productos.slice(0, limit)
+            return productosLimitados;
+
 
         } catch (e) {
             throw new Error('error en getall');
@@ -18,7 +25,8 @@ class ProductManagerMongoose {
             const product = await productModel.findById(id);
             if (product) {
                 return product;
-            };
+            }
+            throw new Error('no product with said id')
         } catch (e) {
             throw new Error('error en getbyid')
         };
@@ -38,12 +46,12 @@ class ProductManagerMongoose {
         };
     };
 
-    async updateProduct(id, properties) {
+    async updateProduct(id, newProperties) {
         try {
             const producto = await productModel.findByIdAndUpdate(id, {
-                title: properties.title,
-                description: properties.description,
-                price: properties.price
+                title: newProperties.title,
+                description: newProperties.description,
+                price: newProperties.price
             }, { new: true });
             return producto;
         } catch (e) {
