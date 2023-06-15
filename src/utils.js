@@ -16,7 +16,6 @@ const path = require("path")
 
 //  --------------MONGOOSE--------------
 const { connect } = require("mongoose")
-const userModel = require('./DAO/models/users.model');
 const productModel = require('./DAO/models/product.model');
 const messagesModel = require('./DAO/models/messages.model');
 const cartsModel = require('./DAO/models/carts.model');
@@ -61,10 +60,33 @@ async function connectSocket(httpServer) {
     });
 }
 
+//--------checkquery------
+//Cree esta funcion para que no sea tan engorroso el otro archivo, ya que no sabía como hacerlo de otra forma
+async function checkQuery(queryParams) {
+    let query = {}
+    if (queryParams.title || queryParams.description || queryParams.price) {
+        query.title = queryParams.title ? queryParams.title : undefined
+        query.description = queryParams.description ? queryParams.description : undefined
+        query.price = queryParams.price ? queryParams.price : undefined
+        if (query.title === undefined) {
+            delete query.title
+        }
+        if (query.description === undefined) {
+            delete query.description
+        }
+        if (query.price === undefined) {
+            delete query.price
+        }
+        return query
+    }
+}
+
 // -----------EXPORTS-----------------
 
 module.exports = {
     mongo: connectMongo,
     multer: uploader,
-    socket: connectSocket
+    socket: connectSocket,
+    checkParams: checkQuery
 };
+

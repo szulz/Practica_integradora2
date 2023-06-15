@@ -25,6 +25,7 @@ class CartManagerMongoose {
             };
             const existingProduct = carrito.cart.find((item) => item.product == productId);
             if (existingProduct) {
+                // @ts-ignore
                 existingProduct.quantity += 1;
             } else {
                 carrito.cart.push({ product: productId, quantity: 1 });

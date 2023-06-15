@@ -1,20 +1,17 @@
+const { query } = require("express");
 const productModel = require("../DAO/models/product.model");
-
+const { checkParams } = require("../utils");
+//const { options } = require("../routes/product.router");
 
 class ProductManagerMongoose {
-    async getAll(limit) {
+    async getAll(queryParams) {
         try {
-            const productos = await productModel.find();
-            if (!limit) {
-                return productos;
-            }
-            if (limit > productos.length) {
-                throw new Error(`theres only ${productos}`)
-            }
-            let productosLimitados = productos.slice(0, limit)
-            return productosLimitados;
-
-
+            let query = await checkParams(queryParams);
+            let options = {}
+            options.limit = queryParams.limit ? queryParams.limit : 10
+            options.page = queryParams.page ? queryParams.page : 1
+            options.sort = queryParams.sort ? { price: queryParams.sort } : { createdAt: 1 };
+            return await productModel.paginate(query, options);
         } catch (e) {
             throw new Error('error en getall');
         };
