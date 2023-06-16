@@ -7,9 +7,10 @@ const productManagerMongoose = new ProductManagerMongoose;
 //LIMIT O GET ALL
 productsRouter.get('/', async (req, res) => {
     try {
-        
-        let allProducts = await productManagerMongoose.getAll(req.query);
-        res.status(200).json({ data: allProducts })
+        let allProducts = await productManagerMongoose.getAll(req.query, req.originalUrl);
+        res.status(200).json({
+            data: allProducts,
+        })
     } catch (e) {
         res.status(400).json({
             msg: e.message
