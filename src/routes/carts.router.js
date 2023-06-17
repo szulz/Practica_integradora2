@@ -38,6 +38,42 @@ cartsRouter.post('/:cid/products/:pid', async (req, res) => {
     });
 });
 
+// elimino del carrito el prod seleccionado (tambien le agregue que si tiene cantidad > 1 decremente hasta eliminar el prod)
+cartsRouter.delete('/:cid/products/:pid', async (req, res) => {
+    try {
+        let response = await cartManagerMongoose.deleteProdById(req.params.cid, req.params.pid);
+        if (response) {
+            return res.status(200).send({ msg: 'The desired product quantity has been decreased by 1', data: response })
+        };
+        res.status(200).send({ data: 'the product has been removed from the cart successfully!' });
+    } catch (error) {
+        res.status(400).send({ msg: error.message });
+    }
+})
+
+//elimino todos los prods del carrito
+cartsRouter.delete('/:cid', async (req, res) => {
+    await cartManagerMongoose.deleteCartProducts(req.params.cid)
+    res.status(200).send({ msg: 'the cart has been successfully cleared' })
+})
+
+//PUT api/carts/:cid deberá actualizar el carrito con un arreglo de productos con el formato especificado arriba.
+cartsRouter.put('/:cid', async (req, res) => {
+    let updateCart = await cartManagerMongoose.updateCart(req.params.cid, req.body)
+    res.send({ msg: 'okkk' })
+})
+
+//PUT api/carts/:cid/products/:piddeberá poder actualizar 
+//SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
+cartsRouter.put('/:cid/products/:pid', async (req, res) => {
+    try {
+        let update = await cartManagerMongoose.updateProductQuantity(req.params.cid, req.params.pid, req.body.quantity);
+        res.status(200).send({ msg: 'Product successfully updated', data: update })
+    } catch (e) {
+        res.status(400).send({ msg: e.message })
+    }
+})
+
 //x si no ingreso ruta
 cartsRouter.get('/', async (req, res) => {
     try {
@@ -49,7 +85,5 @@ cartsRouter.get('/', async (req, res) => {
         res.status(400).send(error.message)
     }
 })
-
-
 
 module.exports = cartsRouter;
