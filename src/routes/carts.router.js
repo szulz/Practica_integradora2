@@ -57,7 +57,6 @@ cartsRouter.delete('/:cid', async (req, res) => {
     res.status(200).send({ msg: 'the cart has been successfully cleared' })
 })
 
-// -------------------- UNICO QUE FALTA-----------------
 //PUT api/carts/:cid deberá actualizar el carrito con un arreglo de productos con el formato especificado arriba.
 cartsRouter.put('/:cid', async (req, res) => {
     try {
@@ -67,6 +66,7 @@ cartsRouter.put('/:cid', async (req, res) => {
         res.status(400).json({ msg: 'something went wrong' })
     }
 });
+
 //PUT api/carts/:cid/products/:piddeberá poder actualizar 
 //SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
 cartsRouter.put('/:cid/products/:pid', async (req, res) => {
