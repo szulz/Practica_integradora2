@@ -57,6 +57,7 @@ cartsRouter.delete('/:cid', async (req, res) => {
     res.status(200).send({ msg: 'the cart has been successfully cleared' })
 })
 
+// -------------------- UNICO QUE FALTA-----------------
 //PUT api/carts/:cid deberá actualizar el carrito con un arreglo de productos con el formato especificado arriba.
 cartsRouter.put('/:cid', async (req, res) => {
     let updateCart = await cartManagerMongoose.updateCart(req.params.cid, req.body)

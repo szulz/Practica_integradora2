@@ -6,6 +6,7 @@ const productManager = new ProductManager();
 
 homeRouter.get("/realtimeproducts", async (req, res) => {
     let productos = await productManager.getProducts();
+    console.log(productos);
     return res.render("realTimeProducts", { productos })
 })
 

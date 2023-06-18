@@ -17,7 +17,6 @@ const path = require("path")
 //  --------------MONGOOSE--------------
 const { connect } = require("mongoose")
 const productModel = require('./DAO/models/product.model');
-const messagesModel = require('./DAO/models/messages.model');
 const cartsModel = require('./DAO/models/carts.model');
 
 async function connectMongo() {

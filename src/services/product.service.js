@@ -43,7 +43,7 @@ class ProductManagerMongoose {
             return respose
 
         } catch (e) {
-            throw new Error('error en getall');
+            throw new Error(e.message);
         };
     };
 

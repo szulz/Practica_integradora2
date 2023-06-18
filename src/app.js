@@ -6,6 +6,7 @@ const handlebars = require('express-handlebars')
 
 const productsRouter = require('./routes/product.router.js');
 const cartsRouter = require('./routes/carts.router.js');
+const viewsRouter = require('./routes/views.router.js')
 /*
 const homeRouter = require('./routes/home.router.js')
 const usersRouter = require('./routes/users.router.js')*/
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
+app.use('/products', viewsRouter);
 /*
 app.use('/home', homeRouter);
 app.use('/users', usersRouter);*/
