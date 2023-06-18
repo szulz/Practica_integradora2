@@ -60,10 +60,13 @@ cartsRouter.delete('/:cid', async (req, res) => {
 // -------------------- UNICO QUE FALTA-----------------
 //PUT api/carts/:cid deberá actualizar el carrito con un arreglo de productos con el formato especificado arriba.
 cartsRouter.put('/:cid', async (req, res) => {
-    let updateCart = await cartManagerMongoose.updateCart(req.params.cid, req.body)
-    res.send({ msg: 'okkk' })
-})
-
+    try {
+        let product = await cartManagerMongoose.updateCart(req.params.cid, req.body.products, req.body.quantity);
+        res.send({data: product})
+    } catch (e) {
+        res.status(400).json({ msg: 'something went wrong' })
+    }
+});
 //PUT api/carts/:cid/products/:piddeberá poder actualizar 
 //SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
 cartsRouter.put('/:cid/products/:pid', async (req, res) => {

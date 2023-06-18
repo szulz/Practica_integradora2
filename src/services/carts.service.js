@@ -34,12 +34,13 @@ class CartManagerMongoose {
         } catch (e) {
             throw new Error('error en addtocart')
         }
-
     }
+
     async getById(id) {
         let contenido = await cartsModel.findById(id).populate('cart.product')
         return contenido;
     }
+
     async deleteProdById(cartId, productId) {
         try {
             let targetCart = await cartsModel.findById(cartId)
@@ -55,15 +56,23 @@ class CartManagerMongoose {
             throw new Error(e.message)
         }
     }
+
     async deleteCartProducts(cartId) {
         let cartToEmpty = await cartsModel.findById(cartId);
         cartToEmpty.cart = []
         await cartToEmpty.save()
         return
     }
-    async updateCart(cartId, products) {
-        
+
+    async updateCart(cartId, newProducts, newQuantity) {
+        if (!newQuantity) {
+            newQuantity = 1
+        }
+        let update = { product: newProducts, quantity: newQuantity }
+        let targetCart = await cartsModel.findByIdAndUpdate(cartId, { cart: update }, { new: true })
+        return await targetCart.save()
     }
+
     async updateProductQuantity(cartId, productId, quantity) {
         let targetCart = await cartsModel.findById(cartId);
         let targetProduct = targetCart.cart.find((item) => item.product == productId)

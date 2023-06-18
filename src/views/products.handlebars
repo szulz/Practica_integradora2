@@ -1,3 +1,8 @@
-{{#each productos}}
-TITULO: {{this._id}}<br>
+{{#each products}}
+title: {{this.title}} <br>
+description: {{this.description}} <br>
+price: {{this.price}} <br>
+<br>
 {{/each}}
+
+{{#if getAll.prevLink}} <a href="{{getAll.prevLink}}">prev page</a> {{/if}} {{getAll.page}} {{#if getAll.nextLink}}<a href="{{getAll.nextLink}}">next page</a>{{/if}}

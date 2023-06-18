@@ -14,7 +14,7 @@ class ProductManagerMongoose {
             let res = await productModel.paginate(query, options)
             let respose = {
                 status: 'success',
-                payload: res,
+                payload: res.docs,
                 totalPages: res.totalPages,
                 prevPage: res.prevPage,
                 nextPage: res.nextPage,
