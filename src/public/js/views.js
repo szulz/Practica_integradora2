@@ -1,33 +1,50 @@
-
 function deleteProduct(id) {
     fetch(`/api/products/${id}`, {
         method: "DELETE",
     })
 }
 
+
 //cuando preciono agregar, crear un carrito y si agrego, la proxima vez que toque, no crea otro carro, capturo el id => agrego el producto al carro.
-let key = 0
-function addProduct(id) {
-    if (key === 0) {
-        key = 1
-        console.log('aca');
+async function addProduct(id) {
+    let key = localStorage.getItem('key')
+    console.log(key);
+    if (key === null) {
+        localStorage.setItem('key', 'pass')
         fetch(`/api/carts`, {
             method: "POST",
         })
-        .then(response => response.json())
-            console.log(response);
+            .then(response => response.json())
+            .then(data => {
+                localStorage.setItem('cartData', JSON.stringify(data.data._id))
+                console.log(data);
+                fetch(`/api/carts/${data.data._id}/products/${id}`, {
+                    method: "POST",
+                })
+            })
+        return
     }
-    console.log(key);
-    /*
-    fetch(`/api/products/${id}`, {
-        method: "DELETE",
+    let cartId = localStorage.getItem('cartData')
+    fetch(`/api/carts/${JSON.parse(cartId)}/products/${id}`, {
+        method: "POST",
     })
-    */
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+
 }
 
 /*
-async function deleteProduct(id) {
-
+async function goToCart() {
+    let cartId = localStorage.getItem('cartData')
+    fetch(`/api/carts/${JSON.parse(cartId)}/products/${id}`, {
+        method: "POST",
+    })
     return
 }
 */
+
+async function clearLocalStorage() {
+    return localStorage.clear()
+}

@@ -11,6 +11,7 @@ cartsRouter.post('/', async (req, res) => {
         res.status(200).send({
             status: 'success',
             msg: `New cart created`,
+            id: cart._id,
             data: cart
         });
     } catch (error) {
@@ -31,9 +32,10 @@ cartsRouter.get('/:cid', async (req, res) => {
 //PASO ID DEL CARRO Y PRODUCTO CON SU ID
 cartsRouter.post('/:cid/products/:pid', async (req, res) => {
     let cartData = await cartManagerMongoose.addToCart(req.params.cid, req.params.pid);
-    res.send({
-        msg: 'The following cart has been found',
-        data: cartData
+    res.status(200).send({
+        status: 'success',
+        msg: `A new product has been added to the cart with the id ${req.params.cid}`,
+        data: cartData.cart
     });
 });
 
@@ -60,7 +62,7 @@ cartsRouter.delete('/:cid', async (req, res) => {
 cartsRouter.put('/:cid', async (req, res) => {
     try {
         let product = await cartManagerMongoose.updateCart(req.params.cid, req.body.products, req.body.quantity);
-        res.send({data: product})
+        res.send({ data: product })
     } catch (e) {
         res.status(400).json({ msg: 'something went wrong' })
     }
