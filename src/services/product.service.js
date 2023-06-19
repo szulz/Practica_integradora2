@@ -93,7 +93,7 @@ class ProductManagerMongoose {
             throw new Error('error en delete product');
         }
     }
-
+    
 };
 
 

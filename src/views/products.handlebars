@@ -1,8 +1,15 @@
 {{#each products}}
-title: {{this.title}} <br>
-description: {{this.description}} <br>
-price: {{this.price}} <br>
-<br>
+<div>
+    title: {{this.title}} <br>
+    description: {{this.description}} <br>
+    price: {{this.price}} <br>
+    <button onclick="deleteProduct({{this._id}})">DELETE</button>
+    <button onclick="addProduct({{this._id}})">ADD TO CART</button>
+    <br>
+</div>
 {{/each}}
 
-{{#if getAll.prevLink}} <a href="{{getAll.prevLink}}">prev page</a> {{/if}} {{getAll.page}} {{#if getAll.nextLink}}<a href="{{getAll.nextLink}}">next page</a>{{/if}}
+{{#if getAll.prevLink}} <a href="{{getAll.prevLink}}">prev page</a> {{/if}} {{getAll.page}} {{#if getAll.nextLink}}<a
+    href="{{getAll.nextLink}}">next page</a>{{/if}}
+
+<script src="/js/views.js"></script>

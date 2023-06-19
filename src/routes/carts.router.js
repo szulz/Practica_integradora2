@@ -6,7 +6,6 @@ const cartManagerMongoose = new CartManagerMongoose
 
 //CREO NUEVO CARRO
 cartsRouter.post('/', async (req, res) => {
-    console.log('entre al create');
     try {
         let cart = await cartManagerMongoose.createCart();
         res.status(200).send({
