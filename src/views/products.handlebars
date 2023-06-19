@@ -1,10 +1,10 @@
-<button onclick="goToCart()">🛒 GO TO CART</button>
+<button id="cartButton" class="btn">🛒 GO TO CART</button>
+
 {{#each products}}
 <div>
     title: {{this.title}} <br>
     description: {{this.description}} <br>
     price: {{this.price}} <br>
-    <button onclick="deleteProduct({{this._id}})">DELETE</button>
     <button onclick="addProduct({{this._id}})">ADD TO CART</button>
     <br>
 </div>

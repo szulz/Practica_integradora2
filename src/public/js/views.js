@@ -35,15 +35,15 @@ async function addProduct(id) {
 
 }
 
-/*
-async function goToCart() {
+document.getElementById('cartButton').addEventListener('click', function () {
     let cartId = localStorage.getItem('cartData')
-    fetch(`/api/carts/${JSON.parse(cartId)}/products/${id}`, {
-        method: "POST",
-    })
-    return
+    redirectToURL(`http://localhost:8080/carts/${JSON.parse(cartId)}`);
+});
+
+function redirectToURL(url) {
+    window.location.href = url;
 }
-*/
+
 
 async function clearLocalStorage() {
     return localStorage.clear()
