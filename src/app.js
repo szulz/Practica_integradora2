@@ -1,19 +1,21 @@
-//@ts-check
 const fs = require('fs');
 const express = require('express');
 const { json } = require('express');
 const handlebars = require('express-handlebars')
-
 const productsRouter = require('./routes/product.router.js');
 const cartsRouter = require('./routes/carts.router.js');
 const viewsRouter = require('./routes/views.router.js')
+
+//--------login----------
 const cartsViewsRouter = require('./routes/carts.views.router.js')
-/*
-const homeRouter = require('./routes/home.router.js')
-const usersRouter = require('./routes/users.router.js')*/
+const usersRouter = require('./routes/users.router.js');
+const authRouter = require('./routes/auth.router.js');
+const session = require('express-session')
+const MongoStore = require('connect-mongo');
+//*************************
 
 const myModules = require('./utils.js')
-const path = require('path')
+const path = require('path');
 const app = express();
 const port = 8080;
 
@@ -32,14 +34,23 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // --------RUTAS--------
+app.use(session({
+  store: MongoStore.create({ mongoUrl: 'mongodb+srv://ezeszulz:test@coder.phqbv0m.mongodb.net/E-commerce?retryWrites=true&w=majority', ttl: 7200 }),
+  secret: 'secreto ashu',
+  resave: true,
+  saveUninitialized: true
+}));
 
+app.get('/session', (req, res) => {
+  res.send(req.session)
+})
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/products', viewsRouter);
 app.use('/carts', cartsViewsRouter);
-/*
-app.use('/home', homeRouter);
-app.use('/users', usersRouter);*/
+app.use('/users', usersRouter)
+app.use('/auth', authRouter)
+
 
 // --------SOCKETS--------
 
@@ -48,8 +59,6 @@ const httpServer = app.listen(port, () => {
 });
 
 myModules.socket(httpServer)
-
-
 
 
 
