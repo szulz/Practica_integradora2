@@ -4,14 +4,20 @@ const authRouter = express.Router();
 const UserManagerMongoose = require('../services/users.service');
 const userManagerMongoose = new UserManagerMongoose
 
-
-//admin view *ARREGLAR
+//admin view 
 authRouter.get('/admin', async (req, res) => {
-    if (req.session.isAdmin == false) {
-        return res.redirect('/auth/register')
+    if (req.session.isAdmin == undefined || req.session.isAdmin == false) {
+        console.log('nope');
+        return res.redirect('/auth/login')
     }
     let users = await userManagerMongoose.getUsers()
-    return res.render('admin', { users })
+    const userProperties = users.map(user => {
+        return {
+            email: user.email,
+            pass: user.pass
+        };
+    });
+    return res.render('admin', { userProperties })
 })
 
 
