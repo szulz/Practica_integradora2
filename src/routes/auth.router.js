@@ -1,15 +1,13 @@
 const express = require('express');
 const userModel = require('../DAO/models/users.model');
+const Auth = require('../middlewares/auth.js');
+const auth = new Auth;
 const authRouter = express.Router();
 const UserManagerMongoose = require('../services/users.service');
 const userManagerMongoose = new UserManagerMongoose
 
 //admin view 
-authRouter.get('/admin', async (req, res) => {
-    if (req.session.isAdmin == undefined || req.session.isAdmin == false) {
-        console.log('nope');
-        return res.redirect('/auth/login')
-    }
+authRouter.get('/admin', auth.isAdmin, async (req, res) => {
     let users = await userManagerMongoose.getUsers()
     const userProperties = users.map(user => {
         return {
@@ -30,11 +28,8 @@ authRouter.get('/logOut', async (req, res) => {
 })
 
 // profile user
-authRouter.get('/profile', async (req, res) => {
+authRouter.get('/profile', auth.connectionCheck, async (req, res) => {
     const user = await req.session.user
-    if (!user) {
-        return res.redirect('/auth/register')
-    }
     return res.render('profile', { user })
 })
 
