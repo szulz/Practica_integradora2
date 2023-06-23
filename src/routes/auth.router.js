@@ -45,7 +45,6 @@ authRouter.post('/login', async (req, res) => {
     if (user && user.pass == await req.body.pass) {
         req.session.user = user
         req.session.isAdmin = user.isAdmin
-        console.log(req.session);
         return res.redirect('/auth/profile')
     } else {
         return res.send('error')
