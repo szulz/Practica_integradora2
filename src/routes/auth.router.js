@@ -4,6 +4,17 @@ const authRouter = express.Router();
 const UserManagerMongoose = require('../services/users.service');
 const userManagerMongoose = new UserManagerMongoose
 
+
+//admin view *ARREGLAR
+authRouter.get('/admin', async (req, res) => {
+    if (req.session.isAdmin == false) {
+        return res.redirect('/auth/register')
+    }
+    let users = await userManagerMongoose.getUsers()
+    return res.render('admin', { users })
+})
+
+
 //logout 
 authRouter.get('/logOut', async (req, res) => {
     if (req.session) {
@@ -12,9 +23,12 @@ authRouter.get('/logOut', async (req, res) => {
     return res.redirect('/auth/login')
 })
 
-// perfil user
-authRouter.get('/perfil', async (req, res) => {
+// profile user
+authRouter.get('/profile', async (req, res) => {
     const user = await req.session.user
+    if (!user) {
+        return res.redirect('/auth/register')
+    }
     return res.render('profile', { user })
 })
 
@@ -31,7 +45,7 @@ authRouter.post('/login', async (req, res) => {
         req.session.user = user
         req.session.isAdmin = user.isAdmin
         console.log(req.session);
-        return res.redirect('/auth/perfil')
+        return res.redirect('/auth/profile')
     } else {
         return res.send('error')
     }

@@ -1,6 +1,10 @@
 <h1>My Profile</h1>
 Name: {{user.firstName}}, {{user.lastName}} <br>
 Email: {{user.email}} <br>
-Status:{{#if user.isAdmin}} Admin{{else}} User{{/if}} <br>
+Status:{{#if user.isAdmin}}
+ Admin
+ <button onclick="window.location.href='/auth/admin'">BOTON SECRETO ADM</button></h1>
+{{else}} 
+User{{/if}} <br>
 
 <a href="/auth/logOut">Log Out</a>
