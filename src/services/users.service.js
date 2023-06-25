@@ -7,7 +7,7 @@ class UserManagerMongoose {
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
                 email: newUser.email,
-                pass: newUser.pass,
+                password: newUser.password,
                 isAdmin: newUser.isAdmin,
             });
             return await createNewUser.save();

@@ -5,6 +5,10 @@ const handlebars = require('express-handlebars')
 const productsRouter = require('./routes/product.router.js');
 const cartsRouter = require('./routes/carts.router.js');
 const viewsRouter = require('./routes/views.router.js')
+const passport = require('passport')
+const startPassport = require('./config/passport.config.js');
+const sessionRouter = require('./routes/sessions.github.router.js');
+
 
 //--------login----------
 const cartsViewsRouter = require('./routes/carts.views.router.js')
@@ -16,6 +20,7 @@ const MongoStore = require('connect-mongo');
 
 const myModules = require('./utils.js')
 const path = require('path');
+
 const app = express();
 const port = 8080;
 
@@ -34,16 +39,29 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // --------RUTAS--------
+
+//*MONGOCOOKIES*
 app.use(session({
   store: MongoStore.create({ mongoUrl: 'mongodb+srv://ezeszulz:test@coder.phqbv0m.mongodb.net/E-commerce?retryWrites=true&w=majority', ttl: 7200 }),
   secret: 'secreto ashu',
   resave: true,
   saveUninitialized: true
 }));
+//*fin cookies*
+
+//*PASSPORT*
+startPassport();
+app.use(passport.initialize())
+app.use(passport.session())
+
+//*fin passport*
 
 app.get('/session', (req, res) => {
   res.send(req.session)
 })
+
+app.use('/api/sessions', sessionRouter);
+
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/products', viewsRouter);
@@ -59,6 +77,5 @@ const httpServer = app.listen(port, () => {
 });
 
 myModules.socket(httpServer)
-
 
 

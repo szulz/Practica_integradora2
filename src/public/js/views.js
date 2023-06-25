@@ -10,7 +10,7 @@ async function addProduct(id) {
     let key = localStorage.getItem('key')
     console.log(key);
     if (key === null) {
-        localStorage.setItem('key', 'pass')
+        localStorage.setItem('key', 'password')
         fetch(`/api/carts`, {
             method: "POST",
         })

@@ -80,12 +80,20 @@ async function checkQuery(queryParams) {
     }
 }
 
+//--------bcrypt------------
+const bcrypt = require('bcrypt')
+const createHash = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+const isValidPassword = (password, hashPassword) => bcrypt.compareSync(password, hashPassword)
+
 // -----------EXPORTS-----------------
 
 module.exports = {
     mongo: connectMongo,
     multer: uploader,
     socket: connectSocket,
-    checkParams: checkQuery
+    checkParams: checkQuery,
+    createHash: createHash,
+    isValidPassword: isValidPassword
+
 };
 
