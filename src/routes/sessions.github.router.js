@@ -10,6 +10,20 @@ sessionRouter.get('/githubcallback', passport.authenticate('github', { failureRe
     res.redirect('/auth/profile')
 });
 
+sessionRouter.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+
+sessionRouter.get('/facebookcallback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
+    req.session.user = req.user
+    console.log(req.user);
+    res.redirect('/auth/profile')
+});
+
+
+sessionRouter.get('/login', (req, res) => {
+    let user = req.session.user
+    res.send({ payload: user })
+});
+
 sessionRouter.get('/', (req, res) => {
     let user = req.session.user
     res.send({ payload: user })

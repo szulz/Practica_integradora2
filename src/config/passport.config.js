@@ -5,6 +5,7 @@ const UserModel = require("../DAO/models/users.model.js");
 const userModel = new UserModel;
 const LocalStrategy = local.Strategy;
 const GitHubStrategy = require('passport-github2')
+const FacebookStrategy = require('passport-facebook')
 
 async function startPassport() {
 
@@ -40,6 +41,43 @@ async function startPassport() {
                     }
                 } catch (e) {
                     console.log('error en github');
+                    console.log(e);
+                    return done(e)
+                }
+            }
+        )
+    )
+
+    passport.use(
+        'facebook',
+        new FacebookStrategy(
+            {
+                clientID: '989842548845487',
+                clientSecret: 'fede9849c4b17736f98a021e7dd8c51d',
+                callbackURL: 'http://localhost:8080/api/sessions/facebookcallback',
+                profileFields: ['id', 'emails', 'name']
+            },
+            async (accessTocken, _, profile, done) => {
+                try {
+                    console.log(profile._json.first_name);
+                    let user = await UserModel.findOne({ email: profile._json.email });
+                    if (!user) {
+                        const newUser = {
+                            email: profile._json.email,
+                            firstName: profile._json.first_name || 'noname',
+                            lastName: profile._json.last_name || 'nolast',
+                            isAdmin: false,
+                            password: 'nopass',
+                        };
+                        let userCreated = await UserModel.create(newUser);
+                        console.log('user registered');
+                        return done(null, userCreated);
+                    } else {
+                        console.log('user already exist');
+                        return done(null, user);
+                    }
+                } catch (e) {
+                    console.log('error en facebook');
                     console.log(e);
                     return done(e)
                 }
