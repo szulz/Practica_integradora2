@@ -6,6 +6,7 @@ const userModel = new UserModel;
 const LocalStrategy = local.Strategy;
 const GitHubStrategy = require('passport-github2')
 const FacebookStrategy = require('passport-facebook')
+const GoogleStrategy = require('passport-google-oauth2')
 
 async function startPassport() {
 
@@ -41,6 +42,44 @@ async function startPassport() {
                     }
                 } catch (e) {
                     console.log('error en github');
+                    console.log(e);
+                    return done(e)
+                }
+            }
+        )
+    )
+    passport.use(
+        'google',
+        new GoogleStrategy(
+            {
+                clientID: '101029298405-gs5rfao2de9nn3rtp5nsr8j0tfu4ao7k.apps.googleusercontent.com',
+                clientSecret: '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',
+                callbackURL: "http://localhost:8080/api/sessions/googlecallback",
+                scope: ['https://www.googleapis.com/auth/userinfo.profile', 'email', 'name', 'displayName'],
+                passReqToCallback: true,
+
+            },
+            async (req, accessToken, refreshToken, profile, done) => {
+                try {
+                    console.log(profile);
+                    let user = await UserModel.findOne({ email: profile.email });
+                    if (!user) {
+                        const newUser = {
+                            email: profile.email,
+                            firstName: profile.given_name || 'nofirst',
+                            lastName: profile.family_name || 'nolast',
+                            isAdmin: false,
+                            password: 'nopass',
+                        };
+                        let userCreated = await UserModel.create(newUser);
+                        console.log('user registered');
+                        return done(null, userCreated);
+                    } else {
+                        console.log('user already exist');
+                        return done(null, user);
+                    }
+                } catch (e) {
+                    console.log('error en google');
                     console.log(e);
                     return done(e)
                 }

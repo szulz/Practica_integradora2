@@ -18,6 +18,14 @@ sessionRouter.get('/facebookcallback', passport.authenticate('facebook', { failu
     res.redirect('/auth/profile')
 });
 
+sessionRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email', 'openid'], accessType: 'offline', prompt: 'select_account' }))
+
+sessionRouter.get('/googlecallback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+    req.session.user = req.user
+    console.log(req.user);
+    res.redirect('/auth/profile')
+});
+
 
 sessionRouter.get('/login', (req, res) => {
     let user = req.session.user
