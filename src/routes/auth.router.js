@@ -37,7 +37,7 @@ authRouter.get('/profile', auth.connectionCheck, async (req, res) => {
 
 
 // pantalla de log in
-authRouter.get('/login', async (req, res) => {
+authRouter.get('/login', auth.currentSession, async (req, res) => {
     return res.render('login', {})
 })
 
@@ -48,7 +48,7 @@ authRouter.post('/login', passport.authenticate('login', { failureRedirect: '/au
 })
 
 // pantalla registro
-authRouter.get('/register', async (req, res) => {
+authRouter.get('/register', auth.currentSession, async (req, res) => {
     return res.render('register', {})
 })
 

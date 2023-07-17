@@ -28,6 +28,16 @@ class Auth {
             return res.redirect('/auth/register')
         }
     }
+
+    async currentSession(req, res, next) {
+        if (req.session.user) {
+            console.log('ya estas logeado');
+            return res.redirect('/auth/profile')
+        }
+        console.log('podes loguearte/registrarte');
+        return next()
+
+    }
 }
 
 

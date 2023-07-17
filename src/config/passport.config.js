@@ -6,7 +6,9 @@ const userModel = new UserModel;
 const LocalStrategy = local.Strategy;
 const GitHubStrategy = require('passport-github2')
 const FacebookStrategy = require('passport-facebook')
-const GoogleStrategy = require('passport-google-oauth2')
+const GoogleStrategy = require('passport-google-oauth2');
+const CartManagerMongoose = require('../services/carts.service.js');
+const cartManagerMongoose = new CartManagerMongoose
 
 async function startPassport() {
 
@@ -28,10 +30,10 @@ async function startPassport() {
                     if (!user) {
                         const newUser = {
                             email: profile._json.email,
-                            firstName: profile.username || profile._json.login || 'noname',
-                            lastName: profile.displayName || 'nolast',
-                            isAdmin: false,
-                            password: 'nopass',
+                            first_name: profile.username || profile._json.login || 'unspecified',
+                            last_name: profile.displayName || 'unspecified',
+                            password: 'unspecified',
+                            age: 'unspecified'
                         };
                         let userCreated = await UserModel.create(newUser);
                         console.log('user registered');
@@ -66,10 +68,10 @@ async function startPassport() {
                     if (!user) {
                         const newUser = {
                             email: profile.email,
-                            firstName: profile.given_name || 'nofirst',
-                            lastName: profile.family_name || 'nolast',
-                            isAdmin: false,
-                            password: 'nopass',
+                            first_name: profile.given_name || 'unspecified',
+                            last_name: profile.family_name || 'unspecified',
+                            password: 'unspecified',
+                            age: 'unspecified'
                         };
                         let userCreated = await UserModel.create(newUser);
                         console.log('user registered');
@@ -103,10 +105,10 @@ async function startPassport() {
                     if (!user) {
                         const newUser = {
                             email: profile._json.email,
-                            firstName: profile._json.first_name || 'noname',
-                            lastName: profile._json.last_name || 'nolast',
-                            isAdmin: false,
-                            password: 'nopass',
+                            first_name: profile._json.first_name || 'unspecified',
+                            last_name: profile._json.last_name || 'unspecified',
+                            password: 'unspecified',
+                            age: 'unspecified'
                         };
                         let userCreated = await UserModel.create(newUser);
                         console.log('user registered');
@@ -158,7 +160,10 @@ async function startPassport() {
                         console.log('user already exist');
                         return done(null, false);
                     }
-                    newUser.isAdmin = false
+                    //CREAR CARRO CartManagerMongoose
+                    let cart = await cartManagerMongoose.createCart();
+                    let cartId = cart._id.toString()
+                    newUser.cart = cartId
                     newUser.password = createHash(newUser.password)
                     let userCreated = await UserModel.create(newUser);
                     console.log(userCreated);
