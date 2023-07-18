@@ -7,7 +7,7 @@ sessionRouter.get('/github', passport.authenticate('github', { scope: ['user:ema
 sessionRouter.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
     req.session.user = req.user
     console.log(req.user);
-    res.redirect('/auth/profile')
+    res.redirect('/products')
 });
 
 sessionRouter.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
@@ -15,7 +15,7 @@ sessionRouter.get('/facebook', passport.authenticate('facebook', { scope: ['emai
 sessionRouter.get('/facebookcallback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
     req.session.user = req.user
     console.log(req.user);
-    res.redirect('/auth/profile')
+    res.redirect('/products')
 });
 
 sessionRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email', 'openid'], accessType: 'offline', prompt: 'select_account' }))
@@ -23,7 +23,7 @@ sessionRouter.get('/google', passport.authenticate('google', { scope: ['profile'
 sessionRouter.get('/googlecallback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
     req.session.user = req.user
     console.log(req.user);
-    res.redirect('/auth/profile')
+    res.redirect('/products')
 });
 
 
@@ -33,6 +33,7 @@ sessionRouter.get('/login', (req, res) => {
 });
 
 sessionRouter.get('/', (req, res) => {
+    console.log(req.session);
     let user = req.session.user
     res.send({ payload: user })
 });

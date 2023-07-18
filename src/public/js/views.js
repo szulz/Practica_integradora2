@@ -6,7 +6,27 @@ function deleteProduct(id) {
 
 
 //cuando preciono agregar, crear un carrito y si agrego, la proxima vez que toque, no crea otro carro, capturo el id => agrego el producto al carro.
-async function addProduct(id) {
+async function addProduct(productId) {
+    try {
+        fetch(`/api/carts/products/${productId}`, {
+            method: "POST",
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.data);
+                localStorage.setItem('cartId', JSON.stringify(data.data))
+            })
+        window.alert("Product added to the cart")
+    } catch (e) {
+        res.send({ msg: e })
+    }
+}
+
+
+
+/*
+
+async function addProduct() {
     let key = localStorage.getItem('key')
     console.log(key);
     if (key === null) {
@@ -35,8 +55,10 @@ async function addProduct(id) {
 
 }
 
+*/
+
 document.getElementById('cartButton').addEventListener('click', function () {
-    let cartId = localStorage.getItem('cartData')
+    let cartId = localStorage.getItem('cartId')
     redirectToURL(`http://localhost:8080/carts/${JSON.parse(cartId)}`);
 });
 

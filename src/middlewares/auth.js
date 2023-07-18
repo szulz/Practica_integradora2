@@ -32,7 +32,7 @@ class Auth {
     async currentSession(req, res, next) {
         if (req.session.user) {
             console.log('ya estas logeado');
-            return res.redirect('/auth/profile')
+            return res.redirect('/products')
         }
         console.log('podes loguearte/registrarte');
         return next()

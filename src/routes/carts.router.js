@@ -28,15 +28,30 @@ cartsRouter.get('/:cid', async (req, res) => {
     });
 })
 
+//testing
+cartsRouter.post('/products/:pid', async (req, res) => {
+    let cart = req.session.user.cart[0]
+    let cartData = await cartManagerMongoose.addToCart(cart, req.params.pid);
+    res.status(200).send({
+        status: 'success',
+        msg: `A new product has been added to the cart with the id ${cart}`,
+        data: cartData._id
+    });
+
+});
+
 
 //PASO ID DEL CARRO Y PRODUCTO CON SU ID
 cartsRouter.post('/:cid/products/:pid', async (req, res) => {
+
     let cartData = await cartManagerMongoose.addToCart(req.params.cid, req.params.pid);
     res.status(200).send({
         status: 'success',
         msg: `A new product has been added to the cart with the id ${req.params.cid}`,
         data: cartData.cart
     });
+
+    res.send({ msg: 'all ok' })
 });
 
 // elimino del carrito el prod seleccionado (tambien le agregue que si tiene cantidad > 1 decremente hasta eliminar el prod)

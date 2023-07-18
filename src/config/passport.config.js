@@ -35,6 +35,9 @@ async function startPassport() {
                             password: 'unspecified',
                             age: 'unspecified'
                         };
+                        let cart = await cartManagerMongoose.createCart();
+                        let cartId = cart._id.toString()
+                        newUser.cart = cartId
                         let userCreated = await UserModel.create(newUser);
                         console.log('user registered');
                         return done(null, userCreated);
@@ -73,6 +76,9 @@ async function startPassport() {
                             password: 'unspecified',
                             age: 'unspecified'
                         };
+                        let cart = await cartManagerMongoose.createCart();
+                        let cartId = cart._id.toString()
+                        newUser.cart = cartId
                         let userCreated = await UserModel.create(newUser);
                         console.log('user registered');
                         return done(null, userCreated);
@@ -110,6 +116,9 @@ async function startPassport() {
                             password: 'unspecified',
                             age: 'unspecified'
                         };
+                        let cart = await cartManagerMongoose.createCart();
+                        let cartId = cart._id.toString()
+                        newUser.cart = cartId
                         let userCreated = await UserModel.create(newUser);
                         console.log('user registered');
                         return done(null, userCreated);
@@ -161,6 +170,7 @@ async function startPassport() {
                         return done(null, false);
                     }
                     //CREAR CARRO CartManagerMongoose
+                    //HACER UNO EN TODOS LOS DEMAS 
                     let cart = await cartManagerMongoose.createCart();
                     let cartId = cart._id.toString()
                     newUser.cart = cartId
