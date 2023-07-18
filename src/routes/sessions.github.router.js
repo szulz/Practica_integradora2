@@ -32,7 +32,7 @@ sessionRouter.get('/login', (req, res) => {
     res.send({ payload: user })
 });
 
-sessionRouter.get('/', (req, res) => {
+sessionRouter.get('/current', (req, res) => {
     console.log(req.session);
     let user = req.session.user
     res.send({ payload: user })
